@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: ceh-uchet
+    runtime: python
+    plan: free
+    region: frankfurt
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT --proxy-headers
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: DEMO_MODE
+        value: "0"
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: FORWARDED_ALLOW_IPS
+        value: "*"
+      - key: ACCESS_USER
+        value: "ceh"
+      - key: ACCESS_PASSWORD
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: SEED_PINS
+        sync: false
